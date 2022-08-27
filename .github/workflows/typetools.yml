@@ -18,8 +18,8 @@ name: typetools CI
 on: [push, pull_request]
 
 jobs:
-  build:
-
+  build-and-verify:
+    name: Build and verify (JDK ${{ matrix.java }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
