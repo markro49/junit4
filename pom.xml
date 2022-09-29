@@ -119,12 +119,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Annotations from the Checker Framework: nullness, interning, locking, ... -->
-        <dependency>
-          <groupId>org.checkerframework</groupId>
-          <artifactId>checker-qual</artifactId>
-          <version>${checkerFrameworkVersion}</version>
-        </dependency>
+	<!-- Annotations from the Checker Framework: nullness, interning, locking, ... -->
+	<dependency>
+	  <groupId>org.checkerframework</groupId>
+	  <artifactId>checker-qual</artifactId>
+	  <version>${checkerFrameworkVersion}</version>
+	</dependency>
 
     </dependencies>
 
@@ -363,18 +363,18 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.7</version>
             </plugin>
-            <plugin>
-              <!-- This plugin will set properties values using dependency information -->
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-dependency-plugin</artifactId>
-              <executions>
-                <execution>
-                  <goals>
-                    <goal>properties</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
+	    <plugin>
+	      <!-- This plugin will set properties values using dependency information -->
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-dependency-plugin</artifactId>
+	      <executions>
+		<execution>
+		  <goals>
+		    <goal>properties</goal>
+		  </goals>
+		</execution>
+	      </executions>
+	    </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-help-plugin</artifactId>
@@ -536,7 +536,7 @@
             <id>restrict-doclint</id>
             <!-- doclint is only supported by JDK 8 -->
             <activation>
-                <!-- disable doclint because it causes build failures -->
+	        <!-- disable doclint because it causes build failures -->
                 <jdk>[999,)</jdk>
             </activation>
             <build>
