@@ -56,6 +56,10 @@
         </contributor>
     </contributors>
 
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
+
     <scm>
         <connection>scm:git:git://github.com/junit-team/junit4.git</connection>
         <developerConnection>scm:git:git@github.com:junit-team/junit4.git</developerConnection>
@@ -102,7 +106,6 @@
         <gpg.keyname>67893CC4</gpg.keyname>
         <!-- These properties will be set by the Maven Dependency plugin -->
         <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
-        <prerequisites.maven>3.0.4</prerequisites.maven>
     </properties>
 
     <dependencies>
@@ -173,9 +176,9 @@
                                 <requireMavenVersion>
                                     <!-- Some plugin features require a recent Maven runtime to work properly -->
                                     <message>Current version of Maven ${maven.version} required to build the project
-                                        should be ${prerequisites.maven}, or higher!
+                                        should be ${project.prerequisites.maven}, or higher!
                                     </message>
-                                    <version>[${prerequisites.maven},)</version>
+                                    <version>[${project.prerequisites.maven},)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
                                     <message>Current JDK version ${java.version} should be ${jdkVersion}, or higher!
