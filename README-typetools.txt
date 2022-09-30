@@ -1,4 +1,4 @@
-The cuurrent official version of JUnit 4 is junit-4.13.2.jar; released on Feb.13, 2021.
+The current official version of JUnit 4 is junit-4.13.2.jar; released on Feb.13, 2021.
 Unfortunately for Daikon users, this release version contains Java 5 bytecodes.
 When a program that uses JUnit4 is processed by DynComp it produces lots of warnings
 about the use of old bytes codes. More importantly, the Java 5 bytecodes generated for

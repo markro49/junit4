@@ -222,6 +222,53 @@
                     <value>${project.version}</value>
                 </configuration>
             </plugin>
+<?ignore We replace the orignal compiler-plugin definition with our own below.
+            <plugin><!-- Using jdk 1.5.0_22, package-info.java files are compiled correctly. -->
+                <!--
+                java compiler plugin forked in extra process
+                -->
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${jdkVersion}</source>
+                    <target>${jdkVersion}</target>
+                    <testSource>${jdkVersion}</testSource>
+                    <testTarget>${jdkVersion}</testTarget>
+                    <compilerVersion>1.8</compilerVersion>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                    <debug>true</debug>
+                    <fork>true</fork>
+                    <compilerArgs>
+                        <arg>-Xlint:unchecked</arg>
+                    </compilerArgs>
+                    <maxmem>128m</maxmem>
+                    <compilerArguments>
+                      <Xmaxerrs>10000</Xmaxerrs>
+                      <Xmaxwarns>10000</Xmaxwarns>
+                    </compilerArguments>
+                    <annotationProcessorPaths>
+                      <path>
+                        <groupId>org.checkerframework</groupId>
+                        <artifactId>checker</artifactId>
+                        <version>${checkerFrameworkVersion}</version>
+                      </path>
+                    </annotationProcessorPaths>
+                    <annotationProcessors>
+                      <!-- Add all the checkers you want to enable here -->
+                      <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
+                    </annotationProcessors>
+                    <compilerArgs>
+                      <!-- location of the annotated JDK, which comes from a Maven dependency -->
+                      <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
+                      <!-- -Awarns turns type-checking errors into warnings. -->
+                      <arg>-Awarns</arg>
+                      <arg>-AshowSuppressWarningsStrings</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+?>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -573,6 +620,85 @@
             </reporting>
         </profile>
 
+<?ignore We replace the orignal profiles with our own below.
+        <profile>
+            <id>java9</id>
+            <activation>
+                <jdk>[1.9,12)</jdk>
+            </activation>
+            <properties>
+                <!-- JDK 9 minimal source and target versions are 1.6 -->
+                <!-- We need 1.8 to use annotations -->
+                <jdkVersion>1.8</jdkVersion>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <source>1.6</source>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <source>1.6</source>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+        <profile>
+            <id>java12</id>
+            <activation>
+                <jdk>[12,)</jdk>
+            </activation>
+            <properties>
+                <!-- JDK 12 minimal source and target versions are 1.7 -->
+                <!-- We need 1.8 to use annotations -->
+                <jdkVersion>1.8</jdkVersion>
+                <enforcerPluginVersion>3.0.0-M3</enforcerPluginVersion>
+                <jarPluginVersion>3.2.0</jarPluginVersion>
+                <javadocPluginVersion>3.2.0</javadocPluginVersion>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <source>1.7</source>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>-Xdoclint:none</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <source>1.7</source>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+?>
+
+        <!-- new profiles for running the CheckerFramework -->
         <profile>
         <!-- This is the base profile for running the Checker Framework.  It will always be run,
              assuming the Java JDK is > 1.7.  (Which is must be for the Checker to work.) -->
